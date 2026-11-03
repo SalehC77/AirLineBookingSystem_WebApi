@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace RationQuota_WebApi.Data
+namespace AirLineBookingSystem_WebApi.Data
 {
     public class ApplicationDbContext:DbContext
     {

@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using RationQuota_WebApi.Data;
+using AirLineBookingSystem_WebApi.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
