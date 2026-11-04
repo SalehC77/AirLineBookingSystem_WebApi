@@ -1,45 +1,48 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
-
-public class Flight
+namespace AirLineBookingSystem_WebApi.Entities
 {
-    [Key]
-    public int Id { get; set; }
+    public class Flight
+    {
+        [Key]
+        public int Id { get; set; }
 
-    [Required]
-    [MaxLength(20)]
-    public string FlightNumber { get; set; }
+        [Required]
+        [MaxLength(20)]
+        public string FlightNumber { get; set; }
 
-    // Airline Information
-    [Required]
-    public string AirlineName { get; set; }
+        // Airline Information
+        [Required]
+        public string AirlineName { get; set; }
 
-    public string? AirlineCode { get; set; }
+        public string? AirlineCode { get; set; }
 
-    // Aircraft Information
-    public string? AirPlaneModel { get; set; }
+        // Aircraft Information
+        public string? AirPlaneModel { get; set; }
 
-    public string? AirPlaneRegistration { get; set; }
+        public string? AirPlaneRegistration { get; set; }
 
-    // Airport Information
-    [Required]
-    public string DepartureAirport { get; set; }
+        // Airport Information
+        [Required]
+        public string DepartureAirport { get; set; }
 
-    [Required]
-    public string ArrivalAirport { get; set; }
+        [Required]
+        public string ArrivalAirport { get; set; }
 
-    // Flight Schedule
-    public DateTime DepartureTime { get; set; }
+        // Flight Schedule
+        public DateTime DepartureTime { get; set; }
 
-    public DateTime ArrivalTime { get; set; }
+        public DateTime ArrivalTime { get; set; }
 
-    public string FlightStatus { get; set; } = "Scheduled";
+        public string FlightStatus { get; set; } = "Scheduled";
 
-    // Available Seats
-    public int EconomySeatsAvailable { get; set; }
+        // Available Seats
+        public int EconomySeatsAvailable { get; set; }
 
-    public int BusinessSeatsAvailable { get; set; }
+        public int BusinessSeatsAvailable { get; set; }
 
-    // Navigation Property
-    public ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
+        // Navigation Property
+        public ICollection<TicketBooking> Tickets { get; set; } = new List<TicketBooking>();
+    }
 }
+

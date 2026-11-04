@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using AirLineBookingSystem_WebApi.Data;
+using AirLineBookingSystem_WebApi.Controllers.User;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// Our custom services
+builder.Services.AddScoped<IUserService, UserService>();
+
+// Our custom services
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
