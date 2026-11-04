@@ -1,5 +1,4 @@
-﻿using AirLineBookingSystem_WebApi.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 public class Passenger
