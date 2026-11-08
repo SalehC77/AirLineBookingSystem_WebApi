@@ -37,9 +37,9 @@ namespace AirLineBookingSystem_WebApi.Entities
         public string FlightStatus { get; set; } = "Scheduled";
 
         // Available Seats
-        public int EconomySeatsAvailable { get; set; }
+        //public int EconomySeatsAvailable { get; set; }
 
-        public int BusinessSeatsAvailable { get; set; }
+        //public int BusinessSeatsAvailable { get; set; }
 
         // Navigation Property
         public ICollection<TicketBooking> Tickets { get; set; } = new List<TicketBooking>();

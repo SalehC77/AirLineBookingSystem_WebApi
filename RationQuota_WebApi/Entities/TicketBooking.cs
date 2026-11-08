@@ -24,17 +24,7 @@ namespace AirLineBookingSystem_WebApi.Entities
 
         public DateTime BookingDate { get; set; } = DateTime.UtcNow;
 
-        [Column(TypeName = "decimal(18,2)")]
-
-
-        public string TicketStatus { get; set; } = "Booked";
-
-        // Check-in Information
-        public DateTime? CheckInTime { get; set; }
-
-        public DateTime? BoardingTime { get; set; }
-
-        public string? GateNumber { get; set; }
+        public string Status { get; set; } = "Booked";
 
         // Navigation Properties
         public int PassengerId { get; set; }
