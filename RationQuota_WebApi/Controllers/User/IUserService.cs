@@ -9,5 +9,6 @@ namespace AirLineBookingSystem_WebApi.Controllers.User
         Task<UserResponseDto> CreateAsync(UserCreateDto dto);
         Task<UserResponseDto?> UpdateAsync(int id, UserUpdateDto dto);
         Task<bool> DeleteAsync(int id);
+        Task<UserResponseDto?> LoginAsync(UserLoginDto dto);
     }
 }

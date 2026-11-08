@@ -12,6 +12,14 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Our custom services
 builder.Services.AddScoped<IUserService, UserService>();
 
+
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy("CorsPolicy_AirLineBookingSystem", policy =>
+    {
+        policy.AllowAnyHeader().AllowCredentials().AllowAnyMethod().WithOrigins("http://localhost:4200", "https://localhost:4200");
+    });
+});
 // Our custom services
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -29,6 +37,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+app.UseCors("CorsPolicy_AirLineBookingSystem");
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

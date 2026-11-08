@@ -91,6 +91,16 @@ namespace AirLineBookingSystem_WebApi.Controllers.User
             return true;
         }
 
+        public async Task<UserResponseDto?> LoginAsync(UserLoginDto dto)
+        {
+            var user = await _context.AppUsers
+                .AsNoTracking()
+                .FirstOrDefaultAsync(user =>
+                    user.Email == dto.Email && user.Password == dto.Password);
+
+            return user is null ? null : MapToResponseDto(user);
+        }
+
         private static UserResponseDto MapToResponseDto(AppUser user)
         {
             return new UserResponseDto

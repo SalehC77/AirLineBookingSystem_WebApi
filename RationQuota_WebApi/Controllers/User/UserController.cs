@@ -1,10 +1,12 @@
 ﻿using AirLineBookingSystem_WebApi.Controllers.User.Dtos;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AirLineBookingSystem_WebApi.Controllers.User
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [EnableCors("CorsPolicy_AirLineBookingSystem")]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -12,6 +14,13 @@ namespace AirLineBookingSystem_WebApi.Controllers.User
         public UserController(IUserService userService)
         {
             _userService = userService;
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<UserResponseDto>> Login(UserLoginDto dto)
+        {
+            var user = await _userService.LoginAsync(dto);
+            return user is null ? Unauthorized("Invalid email or password.") : Ok(user);
         }
 
         [HttpGet]

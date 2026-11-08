@@ -10,6 +10,7 @@ namespace AirLineBookingSystem_WebApi.Entities
         [ForeignKey(nameof(FlightId))]
         public Flight? Flight { get; set; }
         public string TicketName { get; set; }
+        public int AvailableCounts { get; set; }
         public string? TicketDescription { get; set; }
         public string FlightClass { get; set; } // Economy, Business, First Class
         public decimal TicketPrice { get; set; }
