@@ -52,6 +52,7 @@ namespace AirLineBookingSystem_WebApi.Controllers.User
                 Username = dto.Username,
                 Email = dto.Email,
                 Password = dto.Password,
+                CreatedAt = DateTime.UtcNow,
                 Role = string.IsNullOrWhiteSpace(dto.Role) ? "Passenger" : dto.Role
             };
 
