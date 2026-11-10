@@ -8,5 +8,9 @@
         public string? TicketDescription { get; set; }
         public string FlightClass { get; set; } = string.Empty;
         public decimal TicketPrice { get; set; }
+        public int AvailableTickets { get; set; }
+        public DateTime? CheckInTime { get; set; }
+        public DateTime? BoardingTime { get; set; }
+        public string? GateNumber { get; set; }
     }
 }

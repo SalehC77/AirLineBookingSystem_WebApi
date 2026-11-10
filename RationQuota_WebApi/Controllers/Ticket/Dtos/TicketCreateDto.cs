@@ -17,5 +17,14 @@ namespace AirLineBookingSystem_WebApi.Controllers.Ticket.Dtos
 
         [Required]
         public decimal TicketPrice { get; set; }
+
+        [Range(0, int.MaxValue)]
+        public int AvailableTickets { get; set; }
+
+        public DateTime? CheckInTime { get; set; }
+
+        public DateTime? BoardingTime { get; set; }
+
+        public string? GateNumber { get; set; }
     }
 }

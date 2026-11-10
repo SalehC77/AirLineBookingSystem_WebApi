@@ -3,20 +3,22 @@ using AirLineBookingSystem_WebApi.Controllers.TicketBooking;
 using AirLineBookingSystem_WebApi.Controllers.Ticket;
 using AirLineBookingSystem_WebApi.Controllers.User;
 using AirLineBookingSystem_WebApi.Controllers.Passenger;
+using AirLineBookingSystem_WebApi.Controllers.Flights;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+// Our custom services
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Our custom services
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITicketBookingService, TicketBookingService>(); 
 builder.Services.AddScoped<IPassengerService, PassengerService>();
 builder.Services.AddScoped<ITicketService, TicketService>();
+builder.Services.AddScoped<IFlightService, FlightService>();
 
 
 builder.Services.AddCors(opt =>

@@ -30,7 +30,7 @@ public class PassengerController : ControllerBase
     {
         var passenger = await _passengerService.GetByIdAsync(id);
 
-        return passenger is null ? NotFound() : Ok(passenger);
+        return passenger is null ? NotFound("Passenger not found.") : Ok(passenger);
     }
 
     // Create Passenger

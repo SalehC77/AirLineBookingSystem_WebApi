@@ -1,11 +1,13 @@
 ﻿using AirLineBookingSystem_WebApi.Controllers.Ticket.Dtos;
 using AirLineBookingSystem_WebApi.Controllers.User;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AirLineBookingSystem_WebApi.Controllers.Ticket
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [EnableCors("CorsPolicy_AirLineBookingSystem")]
     public class TicketController : ControllerBase
     {
         private readonly ITicketService _ticketService;
@@ -25,7 +27,7 @@ namespace AirLineBookingSystem_WebApi.Controllers.Ticket
         public async Task<ActionResult<TicketResponseDto>> GetById(int id)
         {
             var ticket = await _ticketService.GetByIdAsync(id);
-            return ticket is null ? NotFound() : Ok(ticket);
+            return ticket is null ? NotFound("Ticket not found.") : Ok(ticket);
         }
 
         [HttpPost]
@@ -39,7 +41,7 @@ namespace AirLineBookingSystem_WebApi.Controllers.Ticket
         public async Task<ActionResult<TicketResponseDto>> Update(int id, TicketUpdateDto dto)
         {
             var ticket = await _ticketService.UpdateAsync(id, dto);
-            return ticket is null ? NotFound() : Ok(ticket);
+            return ticket is null ? NotFound("Ticket not found.") : Ok(ticket);
         }
 
         [HttpDelete("{id:int}")]

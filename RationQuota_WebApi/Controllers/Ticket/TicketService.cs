@@ -27,7 +27,11 @@ namespace AirLineBookingSystem_WebApi.Controllers.Ticket
                     TicketName = ticket.TicketName,
                     TicketDescription = ticket.TicketDescription,
                     FlightClass = ticket.FlightClass,
-                    TicketPrice = ticket.TicketPrice
+                    TicketPrice = ticket.TicketPrice,
+                    AvailableTickets = ticket.AvailableTickets,
+                    CheckInTime = ticket.CheckInTime,
+                    BoardingTime = ticket.BoardingTime,
+                    GateNumber = ticket.GateNumber
                 })
                 .ToListAsync();
         }
@@ -44,7 +48,11 @@ namespace AirLineBookingSystem_WebApi.Controllers.Ticket
                     TicketName = ticket.TicketName,
                     TicketDescription = ticket.TicketDescription,
                     FlightClass = ticket.FlightClass,
-                    TicketPrice = ticket.TicketPrice
+                    TicketPrice = ticket.TicketPrice,
+                    AvailableTickets = ticket.AvailableTickets,
+                    CheckInTime = ticket.CheckInTime,
+                    BoardingTime = ticket.BoardingTime,
+                    GateNumber = ticket.GateNumber
                 })
                 .FirstOrDefaultAsync();
         }
@@ -58,7 +66,11 @@ namespace AirLineBookingSystem_WebApi.Controllers.Ticket
                 TicketName = dto.TicketName,
                 TicketDescription = dto.TicketDescription,
                 FlightClass = dto.FlightClass,
-                TicketPrice = dto.TicketPrice
+                TicketPrice = dto.TicketPrice,
+                AvailableTickets = dto.AvailableTickets,
+                CheckInTime = dto.CheckInTime,
+                BoardingTime = dto.BoardingTime,
+                GateNumber = dto.GateNumber
             };
 
             _context.Tickets.Add(ticket);
@@ -82,6 +94,10 @@ namespace AirLineBookingSystem_WebApi.Controllers.Ticket
             ticket.TicketDescription = dto.TicketDescription;
             ticket.FlightClass = dto.FlightClass;
             ticket.TicketPrice = dto.TicketPrice;
+            ticket.AvailableTickets = dto.AvailableTickets;
+            ticket.CheckInTime = dto.CheckInTime;
+            ticket.BoardingTime = dto.BoardingTime;
+            ticket.GateNumber = dto.GateNumber;
 
             await _context.SaveChangesAsync();
 
@@ -113,7 +129,11 @@ namespace AirLineBookingSystem_WebApi.Controllers.Ticket
                 TicketName = ticket.TicketName,
                 TicketDescription = ticket.TicketDescription,
                 FlightClass = ticket.FlightClass,
-                TicketPrice = ticket.TicketPrice
+                TicketPrice = ticket.TicketPrice,
+                AvailableTickets = ticket.AvailableTickets,
+                CheckInTime = ticket.CheckInTime,
+                BoardingTime = ticket.BoardingTime,
+                GateNumber = ticket.GateNumber
             };
         }
     }

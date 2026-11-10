@@ -30,7 +30,7 @@ public class TicketBookingController : ControllerBase
     {
         var booking = await _bookingService.GetByIdAsync(id);
 
-        return booking is null ? NotFound() : Ok(booking);
+        return booking is null ? NotFound("Booking not found.") : Ok(booking);
     }
 
     // Create Booking

@@ -33,7 +33,7 @@ namespace AirLineBookingSystem_WebApi.Controllers.User
         public async Task<ActionResult<UserResponseDto>> GetById(int id)
         {
             var user = await _userService.GetByIdAsync(id);
-            return user is null ? NotFound() : Ok(user);
+            return user is null ? NotFound("User not found.") : Ok(user);
         }
 
         [HttpPost]
@@ -47,7 +47,7 @@ namespace AirLineBookingSystem_WebApi.Controllers.User
         public async Task<ActionResult<UserResponseDto>> Update(int id, UserUpdateDto dto)
         {
             var user = await _userService.UpdateAsync(id, dto);
-            return user is null ? NotFound() : Ok(user);
+            return user is null ? NotFound("User not found.") : Ok(user);
         }
 
         [HttpDelete("{id:int}")]
