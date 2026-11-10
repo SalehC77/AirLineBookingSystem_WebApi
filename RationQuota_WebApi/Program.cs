@@ -1,5 +1,6 @@
 using AirLineBookingSystem_WebApi.Controllers.Ticket;
 using AirLineBookingSystem_WebApi.Controllers.User;
+using AirLineBookingSystem_WebApi.Controllers.Passenger;
 using AirLineBookingSystem_WebApi.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +13,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 // Our custom services
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IPassengerService, PassengerService>();
 builder.Services.AddScoped<ITicketService, TicketService>();
 
 
