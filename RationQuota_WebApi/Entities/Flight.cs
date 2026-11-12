@@ -49,7 +49,7 @@ namespace AirLineBookingSystem_WebApi.Entities
         //public int BusinessSeatsAvailable { get; set; }
 
         // Navigation Property
-        public ICollection<TicketBooking> Tickets { get; set; } = new List<TicketBooking>();
+        public ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
     }
 }
 

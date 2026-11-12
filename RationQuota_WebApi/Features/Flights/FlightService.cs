@@ -1,4 +1,6 @@
 using AirLineBookingSystem_WebApi.Features.Flights.Dtos;
+using AirLineBookingSystem_WebApi.Features.Airports.Dtos;
+using AirLineBookingSystem_WebApi.Features.Tickets.Dtos;
 using AirLineBookingSystem_WebApi.Data;
 using AirLineBookingSystem_WebApi.Helpers.Enums;
 using Microsoft.EntityFrameworkCore;
@@ -56,8 +58,22 @@ public class FlightService : IFlightService
                 AirlineCode = flight.AirlineCode,
                 AirPlaneModel = flight.AirPlaneModel,
                 AirPlaneRegistration = flight.AirPlaneRegistration,
-                DepartureAirportId = flight.DepartureAirportId,
-                ArrivalAirportId = flight.ArrivalAirportId,
+                DepartureAirport = new AirportResponseDto
+                {
+                    Id = flight.DepartureAirport!.Id,
+                    Name = flight.DepartureAirport.Name,
+                    Code = flight.DepartureAirport.Code,
+                    City = flight.DepartureAirport.City,
+                    Country = flight.DepartureAirport.Country
+                },
+                ArrivalAirport = new AirportResponseDto
+                {
+                    Id = flight.ArrivalAirport!.Id,
+                    Name = flight.ArrivalAirport.Name,
+                    Code = flight.ArrivalAirport.Code,
+                    City = flight.ArrivalAirport.City,
+                    Country = flight.ArrivalAirport.Country
+                },
                 DepartureDate = flight.DepartureDate,
                 DepartureDay = flight.DepartureDay,
                 DepartureTime = flight.DepartureTime,
@@ -69,7 +85,7 @@ public class FlightService : IFlightService
 
     public async Task<FlightResponseDto?> GetByIdAsync(int id)
     {
-        return await _context.Flights
+        var flight = await _context.Flights
             .AsNoTracking()
             .Where(flight => flight.Id == id)
             .Select(flight => new FlightResponseDto
@@ -80,8 +96,22 @@ public class FlightService : IFlightService
                 AirlineCode = flight.AirlineCode,
                 AirPlaneModel = flight.AirPlaneModel,
                 AirPlaneRegistration = flight.AirPlaneRegistration,
-                DepartureAirportId = flight.DepartureAirportId,
-                ArrivalAirportId = flight.ArrivalAirportId,
+                DepartureAirport = new AirportResponseDto
+                {
+                    Id = flight.DepartureAirport!.Id,
+                    Name = flight.DepartureAirport.Name,
+                    Code = flight.DepartureAirport.Code,
+                    City = flight.DepartureAirport.City,
+                    Country = flight.DepartureAirport.Country
+                },
+                ArrivalAirport = new AirportResponseDto
+                {
+                    Id = flight.ArrivalAirport!.Id,
+                    Name = flight.ArrivalAirport.Name,
+                    Code = flight.ArrivalAirport.Code,
+                    City = flight.ArrivalAirport.City,
+                    Country = flight.ArrivalAirport.Country
+                },
                 DepartureDate = flight.DepartureDate,
                 DepartureDay = flight.DepartureDay,
                 DepartureTime = flight.DepartureTime,
@@ -89,6 +119,31 @@ public class FlightService : IFlightService
                 FlightStatus = flight.FlightStatus
             })
             .FirstOrDefaultAsync();
+
+        if (flight is null)
+        {
+            return null;
+        }
+
+        flight.Tickets = await _context.Tickets
+            .AsNoTracking()
+            .Where(ticket => ticket.FlightId == id)
+            .Select(ticket => new TicketResponseDto
+            {
+                Id = ticket.Id,
+                FlightId = ticket.FlightId,
+                TicketName = ticket.TicketName,
+                TicketDescription = ticket.TicketDescription,
+                FlightClass = ticket.FlightClass,
+                TicketPrice = ticket.TicketPrice,
+                AvailableTickets = ticket.AvailableTickets,
+                CheckInTime = ticket.CheckInTime,
+                BoardingTime = ticket.BoardingTime,
+                GateNumber = ticket.GateNumber
+            })
+            .ToListAsync();
+
+        return flight;
     }
 
     public async Task<FlightResponseDto?> CreateAsync(FlightCreateDto dto)
@@ -104,7 +159,7 @@ public class FlightService : IFlightService
         _context.Flights.Add(flight);
         await _context.SaveChangesAsync();
 
-        return MapToResponseDto(flight);
+        return await GetByIdAsync(flight.Id);
     }
 
     public async Task<FlightResponseDto?> UpdateAsync(int id, FlightUpdateDto dto)
@@ -123,7 +178,7 @@ public class FlightService : IFlightService
         ApplyDto(flight, dto);
         await _context.SaveChangesAsync();
 
-        return MapToResponseDto(flight);
+        return await GetByIdAsync(flight.Id);
     }
 
     public async Task<bool> DeleteAsync(int id)
@@ -161,23 +216,4 @@ public class FlightService : IFlightService
         flight.FlightStatus = dto.FlightStatus;
     }
 
-    private static FlightResponseDto MapToResponseDto(FlightEntity flight)
-    {
-        return new FlightResponseDto
-        {
-            Id = flight.Id,
-            FlightNumber = flight.FlightNumber,
-            AirlineName = flight.AirlineName,
-            AirlineCode = flight.AirlineCode,
-            AirPlaneModel = flight.AirPlaneModel,
-            AirPlaneRegistration = flight.AirPlaneRegistration,
-            DepartureAirportId = flight.DepartureAirportId,
-            ArrivalAirportId = flight.ArrivalAirportId,
-            DepartureDate = flight.DepartureDate,
-            DepartureDay = flight.DepartureDay,
-            DepartureTime = flight.DepartureTime,
-            LandingTime = flight.LandingTime,
-            FlightStatus = flight.FlightStatus
-        };
-    }
 }
