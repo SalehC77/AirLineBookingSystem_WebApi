@@ -1,4 +1,5 @@
-﻿
+
+using AirLineBookingSystem_WebApi.Helpers.Enums;
 using System.ComponentModel.DataAnnotations;
 namespace AirLineBookingSystem_WebApi.Entities
 {
@@ -23,18 +24,24 @@ namespace AirLineBookingSystem_WebApi.Entities
         public string? AirPlaneRegistration { get; set; }
 
         // Airport Information
+       
+        
         [Required]
-        public string DepartureAirport { get; set; }
+        public int DepartureAirportId { get; set; }
+        public virtual Airport? DepartureAirport { get; set; }
 
         [Required]
-        public string ArrivalAirport { get; set; }
+        public int ArrivalAirportId { get; set; }
+        public virtual Airport? ArrivalAirport { get; set; }
+        
 
         // Flight Schedule
+        public DateTime DepartureDate { get; set; }
+        public string? DepartureDay { get; set; } 
         public DateTime DepartureTime { get; set; }
+        public DateTime LandingTime { get; set; }
 
-        public DateTime ArrivalTime { get; set; }
-
-        public string FlightStatus { get; set; } = "Scheduled";
+        public FlightStatus FlightStatus { get; set; } = FlightStatus.Scheduled;
 
         // Available Seats
         //public int EconomySeatsAvailable { get; set; }

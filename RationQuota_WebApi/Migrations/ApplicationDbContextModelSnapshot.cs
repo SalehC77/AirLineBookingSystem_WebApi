@@ -22,6 +22,87 @@ namespace AirLineBookingSystem_WebApi.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("AirLineBookingSystem_WebApi.Entities.Airport", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(3)
+                        .HasColumnType("nvarchar(3)");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Airports");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1001,
+                            City = "الرياض",
+                            Code = "RUH",
+                            Country = "المملكة العربية السعودية",
+                            Name = "مطار الملك خالد الدولي"
+                        },
+                        new
+                        {
+                            Id = 1002,
+                            City = "جدة",
+                            Code = "JED",
+                            Country = "المملكة العربية السعودية",
+                            Name = "مطار الملك عبدالعزيز الدولي"
+                        },
+                        new
+                        {
+                            Id = 1003,
+                            City = "الدمام",
+                            Code = "DMM",
+                            Country = "المملكة العربية السعودية",
+                            Name = "مطار الملك فهد الدولي"
+                        },
+                        new
+                        {
+                            Id = 1004,
+                            City = "المدينة المنورة",
+                            Code = "MED",
+                            Country = "المملكة العربية السعودية",
+                            Name = "مطار الأمير محمد بن عبدالعزيز الدولي"
+                        },
+                        new
+                        {
+                            Id = 1005,
+                            City = "أبها",
+                            Code = "AHB",
+                            Country = "المملكة العربية السعودية",
+                            Name = "مطار أبها الدولي"
+                        },
+                        new
+                        {
+                            Id = 1006,
+                            City = "نيوم",
+                            Code = "NUM",
+                            Country = "المملكة العربية السعودية",
+                            Name = "مطار نيوم باي"
+                        });
+                });
+
             modelBuilder.Entity("AirLineBookingSystem_WebApi.Entities.AppUser", b =>
                 {
                     b.Property<int>("Id")
@@ -61,8 +142,8 @@ namespace AirLineBookingSystem_WebApi.Migrations
                             CreatedAt = new DateTime(2026, 1, 2, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "user02@gmail.com",
                             Password = "Seed_02#",
-                            Role = "Passenger",
-                            Username = "user02"
+                            Role = "مسافر",
+                            Username = "مستخدم02"
                         },
                         new
                         {
@@ -70,8 +151,8 @@ namespace AirLineBookingSystem_WebApi.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "user01@gmail.com",
                             Password = "Seed_01#",
-                            Role = "Passenger",
-                            Username = "user01"
+                            Role = "مسافر",
+                            Username = "مستخدم01"
                         },
                         new
                         {
@@ -79,8 +160,8 @@ namespace AirLineBookingSystem_WebApi.Migrations
                             CreatedAt = new DateTime(2026, 1, 3, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "user03@gmail.com",
                             Password = "Seed_03#",
-                            Role = "Passenger",
-                            Username = "user03"
+                            Role = "مسافر",
+                            Username = "مستخدم03"
                         },
                         new
                         {
@@ -88,8 +169,8 @@ namespace AirLineBookingSystem_WebApi.Migrations
                             CreatedAt = new DateTime(2026, 1, 4, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "user04@gmail.com",
                             Password = "Seed_04#",
-                            Role = "Passenger",
-                            Username = "user04"
+                            Role = "مسافر",
+                            Username = "مستخدم04"
                         },
                         new
                         {
@@ -97,8 +178,8 @@ namespace AirLineBookingSystem_WebApi.Migrations
                             CreatedAt = new DateTime(2026, 1, 5, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "user05@gmail.com",
                             Password = "Seed_05#",
-                            Role = "Passenger",
-                            Username = "user05"
+                            Role = "مسافر",
+                            Username = "مستخدم05"
                         });
                 });
 
@@ -123,15 +204,19 @@ namespace AirLineBookingSystem_WebApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ArrivalAirport")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("AirportId")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("ArrivalTime")
+                    b.Property<int>("ArrivalAirportId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DepartureAirportId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DepartureDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("DepartureAirport")
-                        .IsRequired()
+                    b.Property<string>("DepartureDay")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DepartureTime")
@@ -142,11 +227,19 @@ namespace AirLineBookingSystem_WebApi.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<string>("FlightStatus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("FlightStatus")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("LandingTime")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AirportId");
+
+                    b.HasIndex("ArrivalAirportId");
+
+                    b.HasIndex("DepartureAirportId");
 
                     b.ToTable("Flights");
 
@@ -157,13 +250,15 @@ namespace AirLineBookingSystem_WebApi.Migrations
                             AirPlaneModel = "A320",
                             AirPlaneRegistration = "SEED-N101",
                             AirlineCode = "NSA",
-                            AirlineName = "Northstar Air",
-                            ArrivalAirport = "LAX",
-                            ArrivalTime = new DateTime(2027, 1, 10, 11, 30, 0, 0, DateTimeKind.Utc),
-                            DepartureAirport = "JFK",
+                            AirlineName = "طيران النجم الشمالي",
+                            ArrivalAirportId = 1002,
+                            DepartureAirportId = 1001,
+                            DepartureDate = new DateTime(2027, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDay = "الأحد",
                             DepartureTime = new DateTime(2027, 1, 10, 8, 0, 0, 0, DateTimeKind.Utc),
                             FlightNumber = "SEED101",
-                            FlightStatus = "Scheduled"
+                            FlightStatus = 0,
+                            LandingTime = new DateTime(2027, 1, 10, 11, 30, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
@@ -171,13 +266,15 @@ namespace AirLineBookingSystem_WebApi.Migrations
                             AirPlaneModel = "B737",
                             AirPlaneRegistration = "SEED-C202",
                             AirlineCode = "CDA",
-                            AirlineName = "Cedar Airways",
-                            ArrivalAirport = "SFO",
-                            ArrivalTime = new DateTime(2027, 1, 11, 10, 30, 0, 0, DateTimeKind.Utc),
-                            DepartureAirport = "LAX",
+                            AirlineName = "طيران الأرز",
+                            ArrivalAirportId = 1004,
+                            DepartureAirportId = 1003,
+                            DepartureDate = new DateTime(2027, 1, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDay = "الاثنين",
                             DepartureTime = new DateTime(2027, 1, 11, 9, 0, 0, 0, DateTimeKind.Utc),
                             FlightNumber = "SEED202",
-                            FlightStatus = "Scheduled"
+                            FlightStatus = 0,
+                            LandingTime = new DateTime(2027, 1, 11, 10, 30, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
@@ -185,13 +282,15 @@ namespace AirLineBookingSystem_WebApi.Migrations
                             AirPlaneModel = "A321",
                             AirPlaneRegistration = "SEED-B303",
                             AirlineCode = "BHA",
-                            AirlineName = "Blue Horizon Air",
-                            ArrivalAirport = "MIA",
-                            ArrivalTime = new DateTime(2027, 1, 12, 11, 0, 0, 0, DateTimeKind.Utc),
-                            DepartureAirport = "ORD",
+                            AirlineName = "طيران الأفق الأزرق",
+                            ArrivalAirportId = 1006,
+                            DepartureAirportId = 1005,
+                            DepartureDate = new DateTime(2027, 1, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDay = "الثلاثاء",
                             DepartureTime = new DateTime(2027, 1, 12, 7, 30, 0, 0, DateTimeKind.Utc),
                             FlightNumber = "SEED303",
-                            FlightStatus = "Scheduled"
+                            FlightStatus = 0,
+                            LandingTime = new DateTime(2027, 1, 12, 11, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
@@ -199,13 +298,15 @@ namespace AirLineBookingSystem_WebApi.Migrations
                             AirPlaneModel = "B787",
                             AirPlaneRegistration = "SEED-S404",
                             AirlineCode = "SMA",
-                            AirlineName = "Summit Airlines",
-                            ArrivalAirport = "DEN",
-                            ArrivalTime = new DateTime(2027, 1, 13, 9, 0, 0, 0, DateTimeKind.Utc),
-                            DepartureAirport = "SEA",
+                            AirlineName = "طيران القمة",
+                            ArrivalAirportId = 1003,
+                            DepartureAirportId = 1002,
+                            DepartureDate = new DateTime(2027, 1, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDay = "الأربعاء",
                             DepartureTime = new DateTime(2027, 1, 13, 6, 0, 0, 0, DateTimeKind.Utc),
                             FlightNumber = "SEED404",
-                            FlightStatus = "Scheduled"
+                            FlightStatus = 0,
+                            LandingTime = new DateTime(2027, 1, 13, 9, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
@@ -213,13 +314,415 @@ namespace AirLineBookingSystem_WebApi.Migrations
                             AirPlaneModel = "E190",
                             AirPlaneRegistration = "SEED-C505",
                             AirlineCode = "CCC",
-                            AirlineName = "Coastal Connect",
-                            ArrivalAirport = "IAD",
-                            ArrivalTime = new DateTime(2027, 1, 14, 13, 45, 0, 0, DateTimeKind.Utc),
-                            DepartureAirport = "BOS",
+                            AirlineName = "طيران الساحل",
+                            ArrivalAirportId = 1004,
+                            DepartureAirportId = 1001,
+                            DepartureDate = new DateTime(2027, 1, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDay = "الخميس",
                             DepartureTime = new DateTime(2027, 1, 14, 12, 0, 0, 0, DateTimeKind.Utc),
                             FlightNumber = "SEED505",
-                            FlightStatus = "Scheduled"
+                            FlightStatus = 0,
+                            LandingTime = new DateTime(2027, 1, 14, 13, 45, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 6,
+                            AirPlaneModel = "A320",
+                            AirPlaneRegistration = "SEED-A606",
+                            AirlineCode = "ARA",
+                            AirlineName = "الخطوط العربية",
+                            ArrivalAirportId = 1005,
+                            DepartureAirportId = 1004,
+                            DepartureDate = new DateTime(2027, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDay = "الجمعة",
+                            DepartureTime = new DateTime(2027, 1, 15, 7, 0, 0, 0, DateTimeKind.Utc),
+                            FlightNumber = "SEED606",
+                            FlightStatus = 0,
+                            LandingTime = new DateTime(2027, 1, 15, 9, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 7,
+                            AirPlaneModel = "B737",
+                            AirPlaneRegistration = "SEED-O707",
+                            AirlineCode = "OAS",
+                            AirlineName = "طيران الواحة",
+                            ArrivalAirportId = 1001,
+                            DepartureAirportId = 1006,
+                            DepartureDate = new DateTime(2027, 1, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDay = "السبت",
+                            DepartureTime = new DateTime(2027, 1, 16, 10, 0, 0, 0, DateTimeKind.Utc),
+                            FlightNumber = "SEED707",
+                            FlightStatus = 0,
+                            LandingTime = new DateTime(2027, 1, 16, 12, 15, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 8,
+                            AirPlaneModel = "A321",
+                            AirPlaneRegistration = "SEED-J808",
+                            AirlineCode = "JZR",
+                            AirlineName = "طيران الجزيرة",
+                            ArrivalAirportId = 1005,
+                            DepartureAirportId = 1003,
+                            DepartureDate = new DateTime(2027, 1, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDay = "الأحد",
+                            DepartureTime = new DateTime(2027, 1, 17, 8, 30, 0, 0, DateTimeKind.Utc),
+                            FlightNumber = "SEED808",
+                            FlightStatus = 0,
+                            LandingTime = new DateTime(2027, 1, 17, 10, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 9,
+                            AirPlaneModel = "B787",
+                            AirPlaneRegistration = "SEED-D909",
+                            AirlineCode = "DSR",
+                            AirlineName = "طيران الصحراء",
+                            ArrivalAirportId = 1006,
+                            DepartureAirportId = 1002,
+                            DepartureDate = new DateTime(2027, 1, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDay = "الاثنين",
+                            DepartureTime = new DateTime(2027, 1, 18, 14, 0, 0, 0, DateTimeKind.Utc),
+                            FlightNumber = "SEED909",
+                            FlightStatus = 0,
+                            LandingTime = new DateTime(2027, 1, 18, 16, 45, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 10,
+                            AirPlaneModel = "E190",
+                            AirPlaneRegistration = "SEED-F010",
+                            AirlineCode = "FJR",
+                            AirlineName = "طيران الفجر",
+                            ArrivalAirportId = 1003,
+                            DepartureAirportId = 1005,
+                            DepartureDate = new DateTime(2027, 1, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDay = "الثلاثاء",
+                            DepartureTime = new DateTime(2027, 1, 19, 6, 45, 0, 0, DateTimeKind.Utc),
+                            FlightNumber = "SEED010",
+                            FlightStatus = 0,
+                            LandingTime = new DateTime(2027, 1, 19, 8, 15, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 11,
+                            AirPlaneModel = "A320",
+                            AirPlaneRegistration = "SEED-S011",
+                            AirlineCode = "SAA",
+                            AirlineName = "الخطوط السعودية",
+                            ArrivalAirportId = 1003,
+                            DepartureAirportId = 1001,
+                            DepartureDate = new DateTime(2027, 1, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDay = "الأربعاء",
+                            DepartureTime = new DateTime(2027, 1, 20, 7, 0, 0, 0, DateTimeKind.Utc),
+                            FlightNumber = "SEED011",
+                            FlightStatus = 1,
+                            LandingTime = new DateTime(2027, 1, 20, 8, 30, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 12,
+                            AirPlaneModel = "B737",
+                            AirPlaneRegistration = "SEED-N012",
+                            AirlineCode = "NKB",
+                            AirlineName = "طيران النخبة",
+                            ArrivalAirportId = 1004,
+                            DepartureAirportId = 1002,
+                            DepartureDate = new DateTime(2027, 1, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDay = "الخميس",
+                            DepartureTime = new DateTime(2027, 1, 21, 9, 15, 0, 0, DateTimeKind.Utc),
+                            FlightNumber = "SEED012",
+                            FlightStatus = 1,
+                            LandingTime = new DateTime(2027, 1, 21, 11, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 13,
+                            AirPlaneModel = "A321",
+                            AirPlaneRegistration = "SEED-M013",
+                            AirlineCode = "MDA",
+                            AirlineName = "طيران المدى",
+                            ArrivalAirportId = 1005,
+                            DepartureAirportId = 1003,
+                            DepartureDate = new DateTime(2027, 1, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDay = "الجمعة",
+                            DepartureTime = new DateTime(2027, 1, 22, 10, 0, 0, 0, DateTimeKind.Utc),
+                            FlightNumber = "SEED013",
+                            FlightStatus = 1,
+                            LandingTime = new DateTime(2027, 1, 22, 12, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 14,
+                            AirPlaneModel = "B787",
+                            AirPlaneRegistration = "SEED-S014",
+                            AirlineCode = "SHB",
+                            AirlineName = "طيران السحاب",
+                            ArrivalAirportId = 1006,
+                            DepartureAirportId = 1004,
+                            DepartureDate = new DateTime(2027, 1, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDay = "السبت",
+                            DepartureTime = new DateTime(2027, 1, 23, 12, 30, 0, 0, DateTimeKind.Utc),
+                            FlightNumber = "SEED014",
+                            FlightStatus = 1,
+                            LandingTime = new DateTime(2027, 1, 23, 14, 45, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 15,
+                            AirPlaneModel = "A320",
+                            AirPlaneRegistration = "SEED-S015",
+                            AirlineCode = "SLM",
+                            AirlineName = "طيران السلام",
+                            ArrivalAirportId = 1001,
+                            DepartureAirportId = 1005,
+                            DepartureDate = new DateTime(2027, 1, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDay = "الأحد",
+                            DepartureTime = new DateTime(2027, 1, 24, 6, 0, 0, 0, DateTimeKind.Utc),
+                            FlightNumber = "SEED015",
+                            FlightStatus = 2,
+                            LandingTime = new DateTime(2027, 1, 24, 8, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 16,
+                            AirPlaneModel = "E190",
+                            AirPlaneRegistration = "SEED-M016",
+                            AirlineCode = "MSH",
+                            AirlineName = "طيران المشرق",
+                            ArrivalAirportId = 1002,
+                            DepartureAirportId = 1006,
+                            DepartureDate = new DateTime(2027, 1, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDay = "الاثنين",
+                            DepartureTime = new DateTime(2027, 1, 25, 8, 45, 0, 0, DateTimeKind.Utc),
+                            FlightNumber = "SEED016",
+                            FlightStatus = 2,
+                            LandingTime = new DateTime(2027, 1, 25, 11, 15, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 17,
+                            AirPlaneModel = "A321",
+                            AirPlaneRegistration = "SEED-Y017",
+                            AirlineCode = "YMM",
+                            AirlineName = "طيران اليمامة",
+                            ArrivalAirportId = 1004,
+                            DepartureAirportId = 1001,
+                            DepartureDate = new DateTime(2027, 1, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDay = "الثلاثاء",
+                            DepartureTime = new DateTime(2027, 1, 26, 13, 0, 0, 0, DateTimeKind.Utc),
+                            FlightNumber = "SEED017",
+                            FlightStatus = 2,
+                            LandingTime = new DateTime(2027, 1, 26, 15, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 18,
+                            AirPlaneModel = "B737",
+                            AirPlaneRegistration = "SEED-M018",
+                            AirlineCode = "MDR",
+                            AirlineName = "طيران المدار",
+                            ArrivalAirportId = 1005,
+                            DepartureAirportId = 1002,
+                            DepartureDate = new DateTime(2027, 1, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDay = "الأربعاء",
+                            DepartureTime = new DateTime(2027, 1, 27, 16, 0, 0, 0, DateTimeKind.Utc),
+                            FlightNumber = "SEED018",
+                            FlightStatus = 2,
+                            LandingTime = new DateTime(2027, 1, 27, 18, 15, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 19,
+                            AirPlaneModel = "A320",
+                            AirPlaneRegistration = "SEED-W019",
+                            AirlineCode = "WAD",
+                            AirlineName = "طيران الوعد",
+                            ArrivalAirportId = 1002,
+                            DepartureAirportId = 1001,
+                            DepartureDate = new DateTime(2024, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDay = "الأحد",
+                            DepartureTime = new DateTime(2024, 12, 1, 7, 0, 0, 0, DateTimeKind.Utc),
+                            FlightNumber = "SEED019",
+                            FlightStatus = 3,
+                            LandingTime = new DateTime(2024, 12, 1, 9, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 20,
+                            AirPlaneModel = "B737",
+                            AirPlaneRegistration = "SEED-R020",
+                            AirlineCode = "RWD",
+                            AirlineName = "طيران الرواد",
+                            ArrivalAirportId = 1004,
+                            DepartureAirportId = 1003,
+                            DepartureDate = new DateTime(2024, 12, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDay = "الاثنين",
+                            DepartureTime = new DateTime(2024, 12, 2, 8, 30, 0, 0, DateTimeKind.Utc),
+                            FlightNumber = "SEED020",
+                            FlightStatus = 3,
+                            LandingTime = new DateTime(2024, 12, 2, 10, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 21,
+                            AirPlaneModel = "A321",
+                            AirPlaneRegistration = "SEED-S021",
+                            AirlineCode = "SHR",
+                            AirlineName = "طيران الشرق",
+                            ArrivalAirportId = 1006,
+                            DepartureAirportId = 1005,
+                            DepartureDate = new DateTime(2024, 12, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDay = "الثلاثاء",
+                            DepartureTime = new DateTime(2024, 12, 3, 10, 15, 0, 0, DateTimeKind.Utc),
+                            FlightNumber = "SEED021",
+                            FlightStatus = 3,
+                            LandingTime = new DateTime(2024, 12, 3, 12, 45, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 22,
+                            AirPlaneModel = "B787",
+                            AirPlaneRegistration = "SEED-N022",
+                            AirlineCode = "NHL",
+                            AirlineName = "طيران النخيل",
+                            ArrivalAirportId = 1001,
+                            DepartureAirportId = 1004,
+                            DepartureDate = new DateTime(2024, 12, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDay = "الأربعاء",
+                            DepartureTime = new DateTime(2024, 12, 4, 13, 0, 0, 0, DateTimeKind.Utc),
+                            FlightNumber = "SEED022",
+                            FlightStatus = 3,
+                            LandingTime = new DateTime(2024, 12, 4, 15, 30, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 23,
+                            AirPlaneModel = "A320",
+                            AirPlaneRegistration = "SEED-A023",
+                            AirlineCode = "AMN",
+                            AirlineName = "طيران الأمان",
+                            ArrivalAirportId = 1003,
+                            DepartureAirportId = 1002,
+                            DepartureDate = new DateTime(2024, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDay = "الخميس",
+                            DepartureTime = new DateTime(2024, 12, 5, 6, 30, 0, 0, DateTimeKind.Utc),
+                            FlightNumber = "SEED023",
+                            FlightStatus = 4,
+                            LandingTime = new DateTime(2024, 12, 5, 8, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 24,
+                            AirPlaneModel = "E190",
+                            AirPlaneRegistration = "SEED-O024",
+                            AirlineCode = "OAH",
+                            AirlineName = "طيران الواحة",
+                            ArrivalAirportId = 1005,
+                            DepartureAirportId = 1006,
+                            DepartureDate = new DateTime(2024, 12, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDay = "الجمعة",
+                            DepartureTime = new DateTime(2024, 12, 6, 9, 0, 0, 0, DateTimeKind.Utc),
+                            FlightNumber = "SEED024",
+                            FlightStatus = 4,
+                            LandingTime = new DateTime(2024, 12, 6, 11, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 25,
+                            AirPlaneModel = "A321",
+                            AirPlaneRegistration = "SEED-J025",
+                            AirlineCode = "JZR",
+                            AirlineName = "طيران الجزيرة",
+                            ArrivalAirportId = 1001,
+                            DepartureAirportId = 1003,
+                            DepartureDate = new DateTime(2024, 12, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDay = "السبت",
+                            DepartureTime = new DateTime(2024, 12, 7, 12, 15, 0, 0, DateTimeKind.Utc),
+                            FlightNumber = "SEED025",
+                            FlightStatus = 4,
+                            LandingTime = new DateTime(2024, 12, 7, 14, 15, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 26,
+                            AirPlaneModel = "B737",
+                            AirPlaneRegistration = "SEED-N026",
+                            AirlineCode = "NOR",
+                            AirlineName = "طيران النور",
+                            ArrivalAirportId = 1004,
+                            DepartureAirportId = 1005,
+                            DepartureDate = new DateTime(2024, 12, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDay = "الأحد",
+                            DepartureTime = new DateTime(2024, 12, 8, 15, 0, 0, 0, DateTimeKind.Utc),
+                            FlightNumber = "SEED026",
+                            FlightStatus = 4,
+                            LandingTime = new DateTime(2024, 12, 8, 17, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 27,
+                            AirPlaneModel = "A320",
+                            AirPlaneRegistration = "SEED-S027",
+                            AirlineCode = "SRA",
+                            AirlineName = "طيران السارية",
+                            ArrivalAirportId = 1005,
+                            DepartureAirportId = 1001,
+                            DepartureDate = new DateTime(2027, 1, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDay = "الخميس",
+                            DepartureTime = new DateTime(2027, 1, 28, 7, 30, 0, 0, DateTimeKind.Utc),
+                            FlightNumber = "SEED027",
+                            FlightStatus = 0,
+                            LandingTime = new DateTime(2027, 1, 28, 9, 30, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 28,
+                            AirPlaneModel = "B737",
+                            AirPlaneRegistration = "SEED-M028",
+                            AirlineCode = "MSR",
+                            AirlineName = "طيران المسار",
+                            ArrivalAirportId = 1006,
+                            DepartureAirportId = 1002,
+                            DepartureDate = new DateTime(2027, 1, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDay = "الجمعة",
+                            DepartureTime = new DateTime(2027, 1, 29, 9, 45, 0, 0, DateTimeKind.Utc),
+                            FlightNumber = "SEED028",
+                            FlightStatus = 0,
+                            LandingTime = new DateTime(2027, 1, 29, 12, 30, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 29,
+                            AirPlaneModel = "A321",
+                            AirPlaneRegistration = "SEED-S029",
+                            AirlineCode = "SMO",
+                            AirlineName = "طيران السمو",
+                            ArrivalAirportId = 1004,
+                            DepartureAirportId = 1003,
+                            DepartureDate = new DateTime(2027, 1, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDay = "السبت",
+                            DepartureTime = new DateTime(2027, 1, 30, 11, 0, 0, 0, DateTimeKind.Utc),
+                            FlightNumber = "SEED029",
+                            FlightStatus = 0,
+                            LandingTime = new DateTime(2027, 1, 30, 13, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 30,
+                            AirPlaneModel = "E190",
+                            AirPlaneRegistration = "SEED-S030",
+                            AirlineCode = "SFW",
+                            AirlineName = "طيران الصفوة",
+                            ArrivalAirportId = 1002,
+                            DepartureAirportId = 1004,
+                            DepartureDate = new DateTime(2027, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureDay = "الأحد",
+                            DepartureTime = new DateTime(2027, 1, 31, 14, 0, 0, 0, DateTimeKind.Utc),
+                            FlightNumber = "SEED030",
+                            FlightStatus = 0,
+                            LandingTime = new DateTime(2027, 1, 31, 15, 45, 0, 0, DateTimeKind.Utc)
                         });
                 });
 
@@ -270,10 +773,10 @@ namespace AirLineBookingSystem_WebApi.Migrations
                         {
                             Id = 1,
                             DateOfBirth = new DateTime(1990, 4, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Alex",
-                            Gender = "Other",
-                            LastName = "Morgan",
-                            Nationality = "United States",
+                            FirstName = "أحمد",
+                            Gender = "ذكر",
+                            LastName = "العمري",
+                            Nationality = "المملكة العربية السعودية",
                             PassportNumber = "SEED-PASS-001",
                             PhoneNumber = "555-0101",
                             UserId = 1
@@ -282,10 +785,10 @@ namespace AirLineBookingSystem_WebApi.Migrations
                         {
                             Id = 2,
                             DateOfBirth = new DateTime(1988, 8, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Jordan",
-                            Gender = "Other",
-                            LastName = "Taylor",
-                            Nationality = "United States",
+                            FirstName = "فاطمة",
+                            Gender = "أنثى",
+                            LastName = "القحطاني",
+                            Nationality = "المملكة العربية السعودية",
                             PassportNumber = "SEED-PASS-002",
                             PhoneNumber = "555-0102",
                             UserId = 2
@@ -294,10 +797,10 @@ namespace AirLineBookingSystem_WebApi.Migrations
                         {
                             Id = 3,
                             DateOfBirth = new DateTime(1995, 2, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Casey",
-                            Gender = "Other",
-                            LastName = "Reed",
-                            Nationality = "Canada",
+                            FirstName = "خالد",
+                            Gender = "ذكر",
+                            LastName = "الحربي",
+                            Nationality = "المملكة العربية السعودية",
                             PassportNumber = "SEED-PASS-003",
                             PhoneNumber = "555-0103",
                             UserId = 3
@@ -306,10 +809,10 @@ namespace AirLineBookingSystem_WebApi.Migrations
                         {
                             Id = 4,
                             DateOfBirth = new DateTime(1992, 11, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Riley",
-                            Gender = "Other",
-                            LastName = "Parker",
-                            Nationality = "United Kingdom",
+                            FirstName = "نورة",
+                            Gender = "أنثى",
+                            LastName = "العتيبي",
+                            Nationality = "المملكة العربية السعودية",
                             PassportNumber = "SEED-PASS-004",
                             PhoneNumber = "555-0104",
                             UserId = 4
@@ -318,10 +821,10 @@ namespace AirLineBookingSystem_WebApi.Migrations
                         {
                             Id = 5,
                             DateOfBirth = new DateTime(1985, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Avery",
-                            Gender = "Other",
-                            LastName = "Quinn",
-                            Nationality = "Australia",
+                            FirstName = "عبدالله",
+                            Gender = "ذكر",
+                            LastName = "الشهري",
+                            Nationality = "المملكة العربية السعودية",
                             PassportNumber = "SEED-PASS-005",
                             PhoneNumber = "555-0105",
                             UserId = 5
@@ -378,11 +881,11 @@ namespace AirLineBookingSystem_WebApi.Migrations
                             AvailableTickets = 100,
                             BoardingTime = new DateTime(2027, 1, 10, 7, 15, 0, 0, DateTimeKind.Utc),
                             CheckInTime = new DateTime(2027, 1, 10, 5, 0, 0, 0, DateTimeKind.Utc),
-                            FlightClass = "Economy",
+                            FlightClass = "اقتصادية",
                             FlightId = 1,
                             GateNumber = "A1",
-                            TicketDescription = "Seed ticket for flight SEED101",
-                            TicketName = "SEED101 Economy",
+                            TicketDescription = "تذكرة تجريبية للرحلة SEED101",
+                            TicketName = "التذكرة SEED101 - الدرجة الاقتصادية",
                             TicketPrice = 199.99m
                         },
                         new
@@ -391,11 +894,11 @@ namespace AirLineBookingSystem_WebApi.Migrations
                             AvailableTickets = 80,
                             BoardingTime = new DateTime(2027, 1, 11, 8, 15, 0, 0, DateTimeKind.Utc),
                             CheckInTime = new DateTime(2027, 1, 11, 6, 0, 0, 0, DateTimeKind.Utc),
-                            FlightClass = "Economy",
+                            FlightClass = "اقتصادية",
                             FlightId = 2,
                             GateNumber = "B2",
-                            TicketDescription = "Seed ticket for flight SEED202",
-                            TicketName = "SEED202 Economy",
+                            TicketDescription = "تذكرة تجريبية للرحلة SEED202",
+                            TicketName = "التذكرة SEED202 - الدرجة الاقتصادية",
                             TicketPrice = 149.99m
                         },
                         new
@@ -404,11 +907,11 @@ namespace AirLineBookingSystem_WebApi.Migrations
                             AvailableTickets = 40,
                             BoardingTime = new DateTime(2027, 1, 12, 6, 45, 0, 0, DateTimeKind.Utc),
                             CheckInTime = new DateTime(2027, 1, 12, 4, 30, 0, 0, DateTimeKind.Utc),
-                            FlightClass = "Business",
+                            FlightClass = "رجال الأعمال",
                             FlightId = 3,
                             GateNumber = "C3",
-                            TicketDescription = "Seed ticket for flight SEED303",
-                            TicketName = "SEED303 Business",
+                            TicketDescription = "تذكرة تجريبية للرحلة SEED303",
+                            TicketName = "التذكرة SEED303 - درجة الأعمال",
                             TicketPrice = 499.99m
                         },
                         new
@@ -417,11 +920,11 @@ namespace AirLineBookingSystem_WebApi.Migrations
                             AvailableTickets = 120,
                             BoardingTime = new DateTime(2027, 1, 13, 5, 15, 0, 0, DateTimeKind.Utc),
                             CheckInTime = new DateTime(2027, 1, 13, 3, 0, 0, 0, DateTimeKind.Utc),
-                            FlightClass = "Economy",
+                            FlightClass = "اقتصادية",
                             FlightId = 4,
                             GateNumber = "D4",
-                            TicketDescription = "Seed ticket for flight SEED404",
-                            TicketName = "SEED404 Economy",
+                            TicketDescription = "تذكرة تجريبية للرحلة SEED404",
+                            TicketName = "التذكرة SEED404 - الدرجة الاقتصادية",
                             TicketPrice = 229.99m
                         },
                         new
@@ -430,11 +933,11 @@ namespace AirLineBookingSystem_WebApi.Migrations
                             AvailableTickets = 20,
                             BoardingTime = new DateTime(2027, 1, 14, 11, 15, 0, 0, DateTimeKind.Utc),
                             CheckInTime = new DateTime(2027, 1, 14, 9, 0, 0, 0, DateTimeKind.Utc),
-                            FlightClass = "First Class",
+                            FlightClass = "الدرجة الأولى",
                             FlightId = 5,
                             GateNumber = "E5",
-                            TicketDescription = "Seed ticket for flight SEED505",
-                            TicketName = "SEED505 First Class",
+                            TicketDescription = "تذكرة تجريبية للرحلة SEED505",
+                            TicketName = "التذكرة SEED505 - الدرجة الأولى",
                             TicketPrice = 899.99m
                         },
                         new
@@ -443,11 +946,11 @@ namespace AirLineBookingSystem_WebApi.Migrations
                             AvailableTickets = 20,
                             BoardingTime = new DateTime(2027, 1, 14, 11, 15, 0, 0, DateTimeKind.Utc),
                             CheckInTime = new DateTime(2027, 1, 14, 9, 0, 0, 0, DateTimeKind.Utc),
-                            FlightClass = "First Class",
+                            FlightClass = "الدرجة الأولى",
                             FlightId = 5,
                             GateNumber = "E5",
-                            TicketDescription = "Seed ticket for flight SEED505",
-                            TicketName = "SEED505 First Class",
+                            TicketDescription = "تذكرة تجريبية للرحلة SEED505",
+                            TicketName = "التذكرة SEED505 - الدرجة الأولى",
                             TicketPrice = 899.99m
                         });
                 });
@@ -503,7 +1006,7 @@ namespace AirLineBookingSystem_WebApi.Migrations
                             FlightId = 1,
                             PassengerId = 1,
                             SeatNumber = "10A",
-                            Status = "Booked",
+                            Status = "محجوز",
                             TicketId = 1,
                             TicketNumber = "SEED-BOOK-001"
                         },
@@ -514,7 +1017,7 @@ namespace AirLineBookingSystem_WebApi.Migrations
                             FlightId = 2,
                             PassengerId = 2,
                             SeatNumber = "11A",
-                            Status = "Booked",
+                            Status = "محجوز",
                             TicketId = 2,
                             TicketNumber = "SEED-BOOK-002"
                         },
@@ -525,7 +1028,7 @@ namespace AirLineBookingSystem_WebApi.Migrations
                             FlightId = 3,
                             PassengerId = 3,
                             SeatNumber = "12A",
-                            Status = "Booked",
+                            Status = "محجوز",
                             TicketId = 3,
                             TicketNumber = "SEED-BOOK-003"
                         },
@@ -536,7 +1039,7 @@ namespace AirLineBookingSystem_WebApi.Migrations
                             FlightId = 4,
                             PassengerId = 4,
                             SeatNumber = "13A",
-                            Status = "Booked",
+                            Status = "محجوز",
                             TicketId = 4,
                             TicketNumber = "SEED-BOOK-004"
                         },
@@ -547,10 +1050,33 @@ namespace AirLineBookingSystem_WebApi.Migrations
                             FlightId = 5,
                             PassengerId = 5,
                             SeatNumber = "14A",
-                            Status = "Booked",
+                            Status = "محجوز",
                             TicketId = 5,
                             TicketNumber = "SEED-BOOK-005"
                         });
+                });
+
+            modelBuilder.Entity("AirLineBookingSystem_WebApi.Entities.Flight", b =>
+                {
+                    b.HasOne("AirLineBookingSystem_WebApi.Entities.Airport", null)
+                        .WithMany("Flights")
+                        .HasForeignKey("AirportId");
+
+                    b.HasOne("AirLineBookingSystem_WebApi.Entities.Airport", "ArrivalAirport")
+                        .WithMany()
+                        .HasForeignKey("ArrivalAirportId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("AirLineBookingSystem_WebApi.Entities.Airport", "DepartureAirport")
+                        .WithMany()
+                        .HasForeignKey("DepartureAirportId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("ArrivalAirport");
+
+                    b.Navigation("DepartureAirport");
                 });
 
             modelBuilder.Entity("AirLineBookingSystem_WebApi.Entities.Passenger", b =>
@@ -596,6 +1122,11 @@ namespace AirLineBookingSystem_WebApi.Migrations
                     b.Navigation("Passenger");
 
                     b.Navigation("Ticket");
+                });
+
+            modelBuilder.Entity("AirLineBookingSystem_WebApi.Entities.Airport", b =>
+                {
+                    b.Navigation("Flights");
                 });
 
             modelBuilder.Entity("AirLineBookingSystem_WebApi.Entities.Flight", b =>

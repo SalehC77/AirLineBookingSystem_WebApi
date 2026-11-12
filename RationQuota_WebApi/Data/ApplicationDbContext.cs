@@ -1,4 +1,4 @@
-﻿using AirLineBookingSystem_WebApi.Entities;
+using AirLineBookingSystem_WebApi.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace AirLineBookingSystem_WebApi.Data
@@ -14,6 +14,7 @@ namespace AirLineBookingSystem_WebApi.Data
         public virtual DbSet<Flight> Flights { get; set; }
         public virtual DbSet<TicketBooking> TicketBookings { get; set; }
         public virtual DbSet<Ticket> Tickets { get; set; }
+        public virtual DbSet<Airport> Airports { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

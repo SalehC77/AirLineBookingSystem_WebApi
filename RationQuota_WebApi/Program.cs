@@ -1,9 +1,10 @@
 using AirLineBookingSystem_WebApi.Data;
-using AirLineBookingSystem_WebApi.Controllers.TicketBooking;
-using AirLineBookingSystem_WebApi.Controllers.Ticket;
-using AirLineBookingSystem_WebApi.Controllers.User;
-using AirLineBookingSystem_WebApi.Controllers.Passenger;
-using AirLineBookingSystem_WebApi.Controllers.Flights;
+using AirLineBookingSystem_WebApi.Features.TicketBookings;
+using AirLineBookingSystem_WebApi.Features.Tickets;
+using AirLineBookingSystem_WebApi.Features.Users;
+using AirLineBookingSystem_WebApi.Features.Passengers;
+using AirLineBookingSystem_WebApi.Features.Flights;
+using AirLineBookingSystem_WebApi.Features.Airports;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +20,7 @@ builder.Services.AddScoped<ITicketBookingService, TicketBookingService>();
 builder.Services.AddScoped<IPassengerService, PassengerService>();
 builder.Services.AddScoped<ITicketService, TicketService>();
 builder.Services.AddScoped<IFlightService, FlightService>();
+builder.Services.AddScoped<IAirportService, AirportService>();
 
 
 builder.Services.AddCors(opt =>

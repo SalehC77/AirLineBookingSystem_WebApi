@@ -1,4 +1,4 @@
-﻿using AirLineBookingSystem_WebApi.Entities;
+using AirLineBookingSystem_WebApi.Entities;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace AirLineBookingSystem_WebApi.Entities
@@ -24,7 +24,7 @@ namespace AirLineBookingSystem_WebApi.Entities
 
         public DateTime BookingDate { get; set; } = DateTime.UtcNow;
 
-        public string Status { get; set; } = "Booked";
+        public string Status { get; set; } = "محجوز";
 
         // Navigation Properties
         public int PassengerId { get; set; }
