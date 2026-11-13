@@ -1,3 +1,5 @@
+using AirLineBookingSystem_WebApi.Features.Airports.Dtos;
+using AirLineBookingSystem_WebApi.Features.Tickets.Dtos;
 using AirLineBookingSystem_WebApi.Helpers.Enums;
 
 namespace AirLineBookingSystem_WebApi.Features.Flights.Dtos;
@@ -10,11 +12,12 @@ public class FlightResponseDto
     public string? AirlineCode { get; set; }
     public string? AirPlaneModel { get; set; }
     public string? AirPlaneRegistration { get; set; }
-    public int DepartureAirportId { get; set; }
-    public int ArrivalAirportId { get; set; }
+    public AirportResponseDto DepartureAirport { get; set; } = new();
+    public AirportResponseDto ArrivalAirport { get; set; } = new();
     public DateTime DepartureDate { get; set; }
     public string? DepartureDay { get; set; }
     public DateTime DepartureTime { get; set; }
     public DateTime LandingTime { get; set; }
     public FlightStatus FlightStatus { get; set; }
+    public ICollection<TicketResponseDto> Tickets { get; set; } = new List<TicketResponseDto>();
 }

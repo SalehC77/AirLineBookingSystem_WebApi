@@ -1,5 +1,6 @@
 
 using AirLineBookingSystem_WebApi.Features.Passengers.Dtos;
+using AirLineBookingSystem_WebApi.Features.TicketBookings.Dtos;
 using AirLineBookingSystem_WebApi.Data;
 using Microsoft.EntityFrameworkCore;
 using PassengerEntity = AirLineBookingSystem_WebApi.Entities.Passenger;
@@ -38,7 +39,7 @@ public class PassengerService : IPassengerService
     // 2. Get Passenger By ID
     public async Task<PassengerResponseDto?> GetByIdAsync(int id)
     {
-        return await _context.Passengers
+        var passenger = await _context.Passengers
             .AsNoTracking()
             .Where(passenger => passenger.Id == id)
             .Select(passenger => new PassengerResponseDto
@@ -54,6 +55,28 @@ public class PassengerService : IPassengerService
                 UserId = passenger.UserId
             })
             .FirstOrDefaultAsync();
+
+        if (passenger is null)
+        {
+            return null;
+        }
+
+        passenger.TicketBookings = await _context.TicketBookings
+            .AsNoTracking()
+            .Where(booking => booking.PassengerId == id)
+            .Select(booking => new TicketBookingResponseDto
+            {
+                Id = booking.Id,
+                TicketId = booking.TicketId,
+                PassengerId = booking.PassengerId,
+                TicketNumber = booking.TicketNumber,
+                SeatNumber = booking.SeatNumber,
+                BookingDate = booking.BookingDate,
+                Status = booking.Status
+            })
+            .ToListAsync();
+
+        return passenger;
     }
 
     // 3. Create Passenger

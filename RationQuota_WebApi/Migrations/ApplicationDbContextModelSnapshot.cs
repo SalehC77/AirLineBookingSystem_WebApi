@@ -966,9 +966,6 @@ namespace AirLineBookingSystem_WebApi.Migrations
                     b.Property<DateTime>("BookingDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("FlightId")
-                        .HasColumnType("int");
-
                     b.Property<int>("PassengerId")
                         .HasColumnType("int");
 
@@ -990,8 +987,6 @@ namespace AirLineBookingSystem_WebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FlightId");
-
                     b.HasIndex("PassengerId");
 
                     b.HasIndex("TicketId");
@@ -1003,7 +998,6 @@ namespace AirLineBookingSystem_WebApi.Migrations
                         {
                             Id = 1,
                             BookingDate = new DateTime(2026, 12, 1, 10, 0, 0, 0, DateTimeKind.Utc),
-                            FlightId = 1,
                             PassengerId = 1,
                             SeatNumber = "10A",
                             Status = "محجوز",
@@ -1014,7 +1008,6 @@ namespace AirLineBookingSystem_WebApi.Migrations
                         {
                             Id = 2,
                             BookingDate = new DateTime(2026, 12, 2, 10, 0, 0, 0, DateTimeKind.Utc),
-                            FlightId = 2,
                             PassengerId = 2,
                             SeatNumber = "11A",
                             Status = "محجوز",
@@ -1025,7 +1018,6 @@ namespace AirLineBookingSystem_WebApi.Migrations
                         {
                             Id = 3,
                             BookingDate = new DateTime(2026, 12, 3, 10, 0, 0, 0, DateTimeKind.Utc),
-                            FlightId = 3,
                             PassengerId = 3,
                             SeatNumber = "12A",
                             Status = "محجوز",
@@ -1036,7 +1028,6 @@ namespace AirLineBookingSystem_WebApi.Migrations
                         {
                             Id = 4,
                             BookingDate = new DateTime(2026, 12, 4, 10, 0, 0, 0, DateTimeKind.Utc),
-                            FlightId = 4,
                             PassengerId = 4,
                             SeatNumber = "13A",
                             Status = "محجوز",
@@ -1047,7 +1038,6 @@ namespace AirLineBookingSystem_WebApi.Migrations
                         {
                             Id = 5,
                             BookingDate = new DateTime(2026, 12, 5, 10, 0, 0, 0, DateTimeKind.Utc),
-                            FlightId = 5,
                             PassengerId = 5,
                             SeatNumber = "14A",
                             Status = "محجوز",
@@ -1093,7 +1083,7 @@ namespace AirLineBookingSystem_WebApi.Migrations
             modelBuilder.Entity("AirLineBookingSystem_WebApi.Entities.Ticket", b =>
                 {
                     b.HasOne("AirLineBookingSystem_WebApi.Entities.Flight", "Flight")
-                        .WithMany()
+                        .WithMany("Tickets")
                         .HasForeignKey("FlightId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1103,10 +1093,6 @@ namespace AirLineBookingSystem_WebApi.Migrations
 
             modelBuilder.Entity("AirLineBookingSystem_WebApi.Entities.TicketBooking", b =>
                 {
-                    b.HasOne("AirLineBookingSystem_WebApi.Entities.Flight", null)
-                        .WithMany("Tickets")
-                        .HasForeignKey("FlightId");
-
                     b.HasOne("AirLineBookingSystem_WebApi.Entities.Passenger", "Passenger")
                         .WithMany("Tickets")
                         .HasForeignKey("PassengerId")
