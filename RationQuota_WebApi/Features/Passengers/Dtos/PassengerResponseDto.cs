@@ -1,3 +1,5 @@
+using AirLineBookingSystem_WebApi.Features.TicketBookings.Dtos;
+
 namespace AirLineBookingSystem_WebApi.Features.Passengers.Dtos
 {
     public class PassengerResponseDto
@@ -19,5 +21,7 @@ namespace AirLineBookingSystem_WebApi.Features.Passengers.Dtos
         public string? PhoneNumber { get; set; }
 
         public int UserId { get; set; }
+
+        public ICollection<TicketBookingResponseDto> TicketBookings { get; set; } = new List<TicketBookingResponseDto>();
     }
 }
